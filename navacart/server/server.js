@@ -13,7 +13,7 @@ const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 
 
-const errorHandler = require("./middleware/errorHandler");
+const errorhandler = require("./middleware/errorhandler");
 
 const app = express();
 
@@ -43,7 +43,7 @@ app.use((req, res) => {
   });
 });
 
-app.use(errorHandler);
+app.use(errorhandler);
 
 
 const PORT = process.env.PORT || 5000;
