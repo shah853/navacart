@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -57,6 +57,9 @@ function App() {
               </AdminRoute>
             }
           />
+
+          {/* Catch-all route: Agar koi invalid URL khole toh seedha Homepage par redirect hoga */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 
