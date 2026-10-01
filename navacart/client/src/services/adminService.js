@@ -7,8 +7,9 @@ export const getStats = async () => {
 
 export const getDashboardStats = getStats;
 
-export const getAllOrders = async () => {
-	const response = await api.get("/admin/orders");
+export const getAllOrders = async (search = "") => {
+	const params = search.trim() ? { search: search.trim() } : {};
+	const response = await api.get("/admin/orders", { params });
 	return response.data;
 };
 

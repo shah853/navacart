@@ -4,6 +4,50 @@ const User = require("../models/User");
 
 const getAllOrders = async (req, res) => {
 	try {
+		const search = typeof req.query.search === "string" ? req.query.search.trim() : "";
+
+		if (search) {
+			const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+			const searchRegex = new RegExp(escapedSearch, "i");
+			const orders = await Order.aggregate([
+				{
+					$lookup: {
+						from: User.collection.name,
+						localField: "user",
+						foreignField: "_id",
+						as: "user",
+					},
+				},
+				{
+					$unwind: {
+						path: "$user",
+						preserveNullAndEmptyArrays: true,
+					},
+				},
+				{
+					$match: {
+						$or: [
+							{ "user.name": searchRegex },
+							{ "user.email": searchRegex },
+							{ "items.name": searchRegex },
+						],
+					},
+				},
+				{
+					$set: {
+						user: {
+							_id: "$user._id",
+							name: "$user.name",
+							email: "$user.email",
+						},
+					},
+				},
+				{ $sort: { createdAt: -1 } },
+			]);
+
+			return res.status(200).json(orders);
+		}
+
 		const orders = await Order.find({})
 			.populate("user", "name email")
 			.sort({ createdAt: -1 });

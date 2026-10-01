@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getOrders } from '../services/orderservice';
+import PaymentBadge from '../components/admin/PaymentBadge';
 
 function Orderhistory() {
   const [orders, setOrders] = useState([]);
@@ -61,19 +62,32 @@ function Orderhistory() {
                 <p className="text-sm font-medium text-slate-500">
                   Order #{order._id.slice(-8).toUpperCase()}
                 </p>
-                <span
-                  className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                    order.status === 'delivered'
-                      ? 'bg-green-100 text-green-700'
-                      : order.status === 'shipped'
-                      ? 'bg-blue-100 text-blue-700'
-                      : order.status === 'cancelled'
-                      ? 'bg-red-100 text-red-700'
-                      : 'bg-yellow-100 text-yellow-700'
-                  }`}
-                >
-                  {order.status}
-                </span>
+                <div className="flex items-start gap-3">
+                  <div className="flex flex-col items-center">
+                    <span className="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                      Order Status
+                    </span>
+                    <span
+                      className={`text-xs font-semibold px-3 py-1 rounded-full ${
+                        order.status === 'delivered'
+                          ? 'bg-green-100 text-green-700'
+                          : order.status === 'shipped'
+                          ? 'bg-blue-100 text-blue-700'
+                          : order.status === 'cancelled'
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-yellow-100 text-yellow-700'
+                      }`}
+                    >
+                      {order.status}
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                      Payment
+                    </span>
+                    <PaymentBadge paymentStatus={order.paymentStatus} />
+                  </div>
+                </div>
               </div>
 
               <p className="text-sm text-slate-600 mb-1">
