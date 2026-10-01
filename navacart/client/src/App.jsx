@@ -13,6 +13,10 @@ import Orderhistory from "./pages/Orderhistory";
 import Loginpage from "./pages/Loginpage";
 import Registerpage from "./pages/Registerpage";
 import Admindashboard from "./pages/Admindashboard";
+import AdminOrders from "./pages/AdminOrders";
+import AdminProducts from "./pages/AdminProducts";
+import AdminCustomers from "./pages/AdminCustomers";
+import AdminLayout from "./components/admin/AdminLayout";
 import Categoriespage from './pages/Categoriespage';
 import Contactpage from './pages/Contactpage';
 
@@ -57,8 +61,41 @@ function App() {
               </AdminRoute>
             }
           />
+          <Route
+            path="/admin/orders"
+            element={
+              <AdminRoute>
+                <AdminOrders />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/products"
+            element={
+              <AdminRoute>
+                <AdminProducts />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/customers"
+            element={
+              <AdminRoute>
+                <AdminCustomers />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <h1 className="text-2xl font-semibold text-slate-900">Settings</h1>
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
 
-          {/* Catch-all route: Agar koi invalid URL khole toh seedha Homepage par redirect hoga */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

@@ -11,8 +11,9 @@ import { AuthContext } from "../context/Authcontext.jsx";
     }
 
 
-     if(user && user.role === "admin"){
+   if(user && user.role === "admin"){
         return children;
      }
+   return <Navigate to="/" replace />;
     }
     export default AdminRoute;
